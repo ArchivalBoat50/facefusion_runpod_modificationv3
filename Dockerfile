@@ -71,7 +71,7 @@ RUN mkdir -p /opt/micromamba && \
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
 ARG FACEFUSION_VERSION
-RUN git clone https://github.com/facefusion/facefusion.git && \
+RUN git clone https://github.com/bundamodelagency/facefusion_runpod_modification.git && \
     cd /facefusion && \
     git checkout ${FACEFUSION_VERSION}
 
