@@ -75,7 +75,7 @@ RUN git clone https://github.com/bundamodelagency/facefusion_runpod_modification
     cd /facefusion_runpod_modification && \
     git checkout ${FACEFUSION_VERSION}
 
-# Install torch
+# Install torch TODO
 ARG INDEX_URL
 ARG TORCH_VERSION
 ENV TORCH_INDEX_URL=${INDEX_URL}
@@ -84,7 +84,7 @@ RUN eval "$(micromamba shell hook --shell bash)" && \
     micromamba activate facefusion && \
     ${TORCH_COMMAND}
 
-# Install the dependencies for FaceFusion
+# Install the dependencies for FaceFusion TODO
 ARG FACEFUSION_CUDA_VERSION
 WORKDIR /facefusion_runpod_modification
 RUN eval "$(micromamba shell hook --shell bash)" && \
@@ -108,7 +108,7 @@ RUN curl -sSL https://github.com/kodxana/RunPod-FilleUploader/raw/main/scripts/i
 # Install rclone
 RUN curl https://rclone.org/install.sh | bash
 
-# Install runpodctl
+# Install runpodctl TODO
 ARG RUNPODCTL_VERSION
 RUN wget "https://github.com/runpod/runpodctl/releases/download/${RUNPODCTL_VERSION}/runpodctl-linux-amd64" -O runpodctl && \
     chmod a+x runpodctl && \
@@ -128,7 +128,7 @@ RUN rm -f /etc/ssh/ssh_host_*
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/502.html /usr/share/nginx/html/502.html
 
-# Set template version
+# Set template version TODO
 ARG RELEASE
 ENV TEMPLATE_VERSION=${RELEASE}
 
