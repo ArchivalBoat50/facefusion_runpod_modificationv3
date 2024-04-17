@@ -72,7 +72,7 @@ RUN mkdir -p /opt/micromamba && \
 WORKDIR /
 ARG FACEFUSION_VERSION
 RUN git clone https://github.com/bundamodelagency/facefusion_runpod_modification.git && \
-    cd /facefusion && \
+    cd /facefusion_runpod_modification && \
     git checkout ${FACEFUSION_VERSION}
 
 # Install torch
