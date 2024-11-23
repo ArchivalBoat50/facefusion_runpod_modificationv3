@@ -58,7 +58,7 @@ RUN ln -s /usr/bin/python3.10 /usr/bin/python
 FROM base as setup
 
 # Install micromamba (conda replacement)
-RUN mkdir -p /opt/micromamba && \
+RUN mkdir /opt/micromamba && \
     cd /opt/micromamba && \
     curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba && \
     ln -s /opt/micromamba/bin/micromamba /usr/local/bin/micromamba && \
