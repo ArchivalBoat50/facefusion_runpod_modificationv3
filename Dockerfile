@@ -86,7 +86,7 @@ RUN eval "$(micromamba shell hook --shell bash)" && \
 
 # Install the dependencies for FaceFusion TODO
 ARG FACEFUSION_CUDA_VERSION
-WORKDIR /facefusion_runpod_modification
+WORKDIR /facefusion
 RUN eval "$(micromamba shell hook --shell bash)" && \
     micromamba activate facefusion && \
     python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
