@@ -1,5 +1,5 @@
 # Stage 1: Base
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 as base
+FROM nvidia/cuda:12.2.0-cudnn8-devel-ubuntu22.04 as base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -71,7 +71,7 @@ RUN mkdir -p /opt/micromamba && \
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
 ARG FACEFUSION_VERSION
-RUN git clone https://github.com/bundamodelagency/facefusion_runpod_modification.git && \
+RUN git clone https://github.com/archivalboat50/facefusion_runpod_modification.git && \
     cd /facefusion_runpod_modification && \
     git checkout ${FACEFUSION_VERSION}
 

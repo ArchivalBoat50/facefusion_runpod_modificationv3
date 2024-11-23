@@ -1,5 +1,5 @@
 variable "USERNAME" {
-    default = "ashleykza"
+    default = "archivalboat50"
 }
 
 variable "APP" {
@@ -7,11 +7,11 @@ variable "APP" {
 }
 
 variable "RELEASE" {
-    default = "2.5.1"
+    default = "3.0.1"
 }
 
 variable "CU_VERSION" {
-    default = "118"
+    default = "126"
 }
 
 target "default" {
@@ -20,10 +20,9 @@ target "default" {
     args = {
         RELEASE = "${RELEASE}"
         INDEX_URL = "https://download.pytorch.org/whl/cu${CU_VERSION}"
-        TORCH_VERSION = "2.1.2+cu${CU_VERSION}"
-        XFORMERS_VERSION = "0.0.23.post1+cu${CU_VERSION}"
-        FACEFUSION_VERSION = "2.5.1"
-        FACEFUSION_CUDA_VERSION = "11.8"
-        RUNPODCTL_VERSION = "v1.14.2"
+        TORCH_VERSION = "2.0.1+cu${CU_VERSION}"
+        FACEFUSION_VERSION = "${RELEASE}"
+        FACEFUSION_CUDA_VERSION = "12.6"
+        RUNPODCTL_VERSION = "v1.14.3"
     }
 }
