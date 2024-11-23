@@ -89,7 +89,7 @@ ARG FACEFUSION_CUDA_VERSION
 WORKDIR /facefusion
 RUN eval "$(micromamba shell hook --shell bash)" && \
     micromamba activate facefusion && \
-    python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
+    python3 install.py --onnxruntime cuda && \
     micromamba deactivate
 
 # Install Jupyter, gdown and OhMyRunPod
