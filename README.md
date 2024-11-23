@@ -10,10 +10,10 @@
 ## Installs
 
 * Ubuntu 22.04 LTS
-* CUDA 11.8
+* CUDA 12.6
 * Python 3.10.12
 * [FaceFusion](
-  https://github.com/facefusion/facefusion) 2.5.1
+  https://github.com/facefusion/facefusion) 3.0.1
 * Torch 2.1.2
 * Jupyter Lab
 * [runpodctl](https://github.com/runpod/runpodctl)
