@@ -79,7 +79,7 @@ RUN git clone https://github.com/facefusion/facefusion.git && \
 ARG INDEX_URL
 ARG TORCH_VERSION
 ENV TORCH_INDEX_URL=${INDEX_URL}
-ENV TORCH_COMMAND="pip3 install torch torchvision --index-url ${TORCH_INDEX_URL}"
+ENV TORCH_COMMAND="pip3 install torch torchvision"
 RUN eval "$(micromamba shell hook --shell bash)" && \
     micromamba activate facefusion && \
     ${TORCH_COMMAND}
