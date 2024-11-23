@@ -71,8 +71,8 @@ RUN mkdir -p /opt/micromamba && \
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
 ARG FACEFUSION_VERSION
-RUN git clone https://github.com/archivalboat50/facefusion_runpod_modificationv3.git && \
-    cd /facefusion_runpod_modificationv3 && \
+RUN git clone https://github.com/facefusion/facefusion.git && \
+    cd /facefusion && \
     git checkout ${FACEFUSION_VERSION}
 
 # Install torch TODO
