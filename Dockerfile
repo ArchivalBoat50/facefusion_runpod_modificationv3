@@ -60,14 +60,13 @@ FROM base as setup
 # Install micromamba (conda replacement)
 RUN mkdir -p /opt/micromamba && \
     cd /opt/micromamba && \
-    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvJ -C /opt/micromamba bin/micromamba && \
+    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba && \
     ln -s /opt/micromamba/bin/micromamba /usr/local/bin/micromamba && \
-    micromamba shell init -s bash && \
-    micromamba config append channels conda-forge && \
+    /opt/micromamba/bin/micromamba shell init -s bash -p ~/micromamba && \
+    /opt/micromamba/bin/micromamba config append channels conda-forge && \
     eval "$(micromamba shell hook --shell bash)" && \
-    micromamba create -y -n facefusion python=3.10 && \
-    micromamba activate facefusion
-
+    micromamba activate && \
+    micromamba create --name facefusion python=3.10
 
 # Clone the git repo of FaceFusion and set version
 WORKDIR /
