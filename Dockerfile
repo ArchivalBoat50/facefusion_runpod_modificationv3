@@ -51,54 +51,54 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 
-# Set Python symlink
+# Set Python
 RUN ln -s /usr/bin/python3.10 /usr/bin/python
 
-# Stage 2: Install FaceFusion and Python modules
+# Stage 2: Install FaceFusion and python modules
 FROM base as setup
 
 # Install micromamba (conda replacement)
 RUN mkdir -p /opt/micromamba && \
     cd /opt/micromamba && \
-    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvJ bin/micromamba && \
-    ln -s /opt/micromamba/bin/micromamba /usr/local/bin/micromamba
+    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba && \
+    ln -s /opt/micromamba/bin/micromamba /usr/local/bin/micromamba && \
+    /opt/micromamba/bin/micromamba shell init -s bash -p ~/micromamba && \
+    /opt/micromamba/bin/micromamba config append channels conda-forge && \
+    eval "$(micromamba shell hook --shell bash)" && \
+    micromamba activate && \
+    micromamba create --name facefusion python=3.10
 
-# Initialize micromamba
-RUN micromamba shell init -s bash && \
-    micromamba config append channels conda-forge
-
-# Create the facefusion environment
-RUN micromamba create -y -n facefusion python=3.10
-
-# Set micromamba as the default shell for subsequent commands
-SHELL ["micromamba", "run", "-n", "facefusion", "/bin/bash", "-c"]
-
-# Clone the FaceFusion repository and set version
+# Clone the git repo of FaceFusion and set version
 WORKDIR /
 ARG FACEFUSION_VERSION
 RUN git clone https://github.com/archivalboat50/facefusion_runpod_modificationv3.git && \
     cd /facefusion_runpod_modificationv3 && \
     git checkout ${FACEFUSION_VERSION}
 
-# Install Torch
+# Install torch TODO
 ARG INDEX_URL
 ARG TORCH_VERSION
 ENV TORCH_INDEX_URL=${INDEX_URL}
 ENV TORCH_COMMAND="pip3 install torch==${TORCH_VERSION} torchvision --index-url ${TORCH_INDEX_URL}"
-RUN ${TORCH_COMMAND}
+RUN eval "$(micromamba shell hook --shell bash)" && \
+    micromamba activate facefusion && \
+    ${TORCH_COMMAND}
 
-# Install the dependencies for FaceFusion
+# Install the dependencies for FaceFusion TODO
 ARG FACEFUSION_CUDA_VERSION
-WORKDIR /facefusion_runpod_modificationv3
-RUN python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION}
+WORKDIR /facefusion_runpod_modification
+RUN eval "$(micromamba shell hook --shell bash)" && \
+    micromamba activate facefusion && \
+    python3 install.py --onnxruntime cuda-${FACEFUSION_CUDA_VERSION} && \
+    micromamba deactivate
 
-# Install Jupyter, gdown, and OhMyRunPod
+# Install Jupyter, gdown and OhMyRunPod
 RUN pip3 install -U --no-cache-dir jupyterlab \
-    jupyterlab_widgets \
-    ipykernel \
-    ipywidgets \
-    gdown \
-    OhMyRunPod
+        jupyterlab_widgets \
+        ipykernel \
+        ipywidgets \
+        gdown \
+        OhMyRunPod
 
 # Install RunPod File Uploader
 RUN curl -sSL https://github.com/kodxana/RunPod-FilleUploader/raw/main/scripts/installer.sh -o installer.sh && \
@@ -108,7 +108,7 @@ RUN curl -sSL https://github.com/kodxana/RunPod-FilleUploader/raw/main/scripts/i
 # Install rclone
 RUN curl https://rclone.org/install.sh | bash
 
-# Install runpodctl
+# Install runpodctl TODO
 ARG RUNPODCTL_VERSION
 RUN wget "https://github.com/runpod/runpodctl/releases/download/${RUNPODCTL_VERSION}/runpodctl-linux-amd64" -O runpodctl && \
     chmod a+x runpodctl && \
@@ -119,7 +119,7 @@ RUN curl https://getcroc.schollz.com | bash
 
 # Install speedtest CLI
 RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
-    apt install -y speedtest
+    apt install speedtest
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
@@ -128,7 +128,7 @@ RUN rm -f /etc/ssh/ssh_host_*
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/502.html /usr/share/nginx/html/502.html
 
-# Set template version
+# Set template version TODO
 ARG RELEASE
 ENV TEMPLATE_VERSION=${RELEASE}
 
